@@ -17,7 +17,8 @@ router.get('/', function(req, res, next) {
 
       res.render('index', {
         title : 'インキュC会議室予約システム',
-        datas : docs
+        datas : docs,
+        errorMessage : ""
       });
     });
   }else{
@@ -38,10 +39,6 @@ router.post('/', function(req, res, next) {
   var contents = req.body.contents;
   var name = req.body.name;
   var time = req.body.time;
-  console.log(date);
-  console.log(contents);
-  console.log(name);
-  console.log(time);
   MeetingData.find(function(err,docs){
     if(err){
       console.log(err);
@@ -52,11 +49,13 @@ router.post('/', function(req, res, next) {
       time : time,
       content : contents
     })
+    console.log(docs);
     newMeetingData.save();
     docs.push(newMeetingData);
     res.render('index', {
       title : 'インキュC会議室予約システム',
-      datas : docs
+      datas : docs,
+      errorMessage : ""
     });
   });
 });

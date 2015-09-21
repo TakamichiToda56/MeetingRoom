@@ -1,13 +1,16 @@
 extends layout
 
 block content
-  script.
-    $(function() {
-      $('.datepicker').datepicker({
-        minDate: 'today'
-      }).on('keypress', function(e){ e.preventDefault(); });
-    });
+  //script.
+    //- $(function() {
+    //-   $('.datepicker').datepicker({
+    //-     minDate: 'today'
+    //-   }).on('keypress', function(e){ e.preventDefault(); });
+    //- });
   div#contents
+    div#calendar
+    input#schedulePlan(type="hidden", value="null")
+    div.errorMessage= errorMessage
     form(method="post", action="/")    
       table(border="1")
         tr
@@ -18,7 +21,7 @@ block content
           th 各予定操作
         tr
           td 
-            input.datepicker(type="text", name="date", required, readonly, placeholder="クリックして日付を入力して下さい")
+            //input.datepicker(type="text", name="date", required, readonly, placeholder="日付を入力して下さい")
           td
             select(name='time')
               option(value="07:00") 07:00
@@ -38,13 +41,13 @@ block content
               option(value="21:00") 21:00
               option(value="22:00") 22:00
           td
-            input(type="text", name="contents", required, placeholder="会議室利用内容を入力して下さい")
+            input(type="text", name="contents", required, placeholder="会議室利用内容を入力して下さい", size="80")
           td
-            input(type="text", name="name", required, placeholder="あなたの名前を入力して下さい")
+            input(type="text", name="name", required, placeholder="名前を入力して下さい")
           td
             input(type="submit", value="予約")
         each data in datas
-          tr
+          tr.eachReserve
             td= data.date
             td= data.time
             td= data.content
