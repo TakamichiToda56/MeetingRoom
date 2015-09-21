@@ -15,8 +15,9 @@ $(document).ready(function() {
 		select: function(start, end, jsEvent, view) {
       allSchedulePlan.push(shapingScheduleData(start,end,view));
       document.getElementById('schedulePlan').value = allSchedulePlan;
+			newTitle = document.getElementById('newReserve').value;
 		  var	eventData = {
-        title: 'today',
+        title: newTitle,
 				start: start,
 				end: end
 			};

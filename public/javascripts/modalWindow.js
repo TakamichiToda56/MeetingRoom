@@ -6,7 +6,7 @@ function modalOpen(ownData){
   $("body").append('<div class="modalOverlay"></div>');
   //[$modal-overlay]をフェードインさせる
   $(".modalOverlay").fadeIn("slow");
-  $(".modalWindow#"+ownData.id).fadeIn("slow");
+  $(".modalWindow").fadeIn("slow");
   modalResize();
 
   // モーダルウインドウの外か閉じるがクリックされる
