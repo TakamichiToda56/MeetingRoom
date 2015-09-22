@@ -14,17 +14,25 @@ $(document).ready(function() {
 		selectHelper: true,
 
 		select: function(start, end, jsEvent, view) {
-      allSchedulePlan.push(shapingScheduleData(start,end,view));
-      document.getElementById('schedulePlan').value = allSchedulePlan;
-			newTitle = document.getElementById('newReserve').value;
-		  var	eventData = {
-        title: newTitle,
-				start: start,
-				end: end
-			};
-			document.getElementById('test').value = "{title:" + newTitle + ",start:"+ start + ",end:"+ end + "}";
-			$('#calendar').fullCalendar('renderEvent', eventData, true);
-			$('#calendar').fullCalendar('unselect');
+
+			title = document.getElementById('newReserve').value;
+			// 予約社名を入力しているのか確認
+			if(title!=""){
+				// 予約を時間で入力しているかの判別
+				if(!start._isUTC){
+					console.log(title);
+					jsonText = shapeJSONText(title, start, end);
+					jsonData = JSON.parse(jsonText);
+					$('#calendar').fullCalendar('renderEvent', jsonData, true);
+					$('#calendar').fullCalendar('unselect');
+					allSchedulePlan.push(jsonText);
+					document.getElementById('schedulePlan').value = allSchedulePlan;
+				}else{
+					alert("予約は時間で入力して下さい。");
+				}
+			}else{
+				alert("予約者名を入力して下さい。");
+			}
 		},
 
     eventClick: function(event, jsEvent, view) {
@@ -62,34 +70,11 @@ $(document).ready(function() {
 	});
 });
 
-shapingScheduleData = function(start,end,view){
-  var schedulePlan = new Array;
-  if(view.name == 'month'){
-    schedulePlan.push(
-      start._d.getFullYear() +"/"+
-      (parseInt(start._d.getMonth())+1) +"/"+
-      start._d.getDate() +" 終日"
-    );
-    schedulePlan.push(
-      end._d.getFullYear() +"/"+
-      (parseInt(end._d.getMonth())+1) +"/"+
-      (parseInt(end._d.getDate())-1) +" 終日"
-    );
-  }else{
-    schedulePlan.push(
-      start._d.getFullYear() +"/"+
-      (parseInt(start._d.getMonth())+1) +"/"+
-      start._d.getDate() +" "+
-      start._d.getHours() +"時"+
-      start._d.getMinutes() +"分"
-    );
-    schedulePlan.push(
-      end._d.getFullYear() +"/"+
-      (parseInt(end._d.getMonth())+1) +"/"+
-      end._d.getDate() +" "+
-      end._d.getHours() +"時"+
-      end._d.getMinutes() +"分"
-    );
-  }
-  return schedulePlan;
+shapeJSONText = function(title,start,end){
+	var jsonData =	{
+		'title':title,
+		'start':start,
+		'end':end
+	};
+	return JSON.stringify(jsonData);
 }
