@@ -1,22 +1,13 @@
 extends layout
 
 block content
-  //script(src="javascripts/modalWindow.js", charset="utf-8")
-  //script.
-    //- $(function() {
-    //-   $('.datepicker').datepicker({
-    //-     minDate: 'today'
-    //-   }).on('keypress', function(e){ e.preventDefault(); });
-    //- });
   div#contents
-    //- a(href="#", onclick="modalOpen(this)") a
-    //- div.modalWindow
+    div= datas
     input(type="text", id="newReserve")
     form(method="post", action="/")
-      input#schedulePlan(type="hidden", value="null")
+      input#schedulePlan(type="hidden", value="null", name="schedule")
       input(type="submit", value="更新")
     div#calendar
-    //- div.errorMessage= errorMessage
     //- form(method="post", action="/")    
     //-   table(border="1")
     //-     tr
