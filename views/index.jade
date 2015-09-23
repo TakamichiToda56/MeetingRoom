@@ -6,6 +6,7 @@ block content
     input(type="text", id="newReserve")
     form(method="post", action="/")
       input#schedulePlan(type="hidden", value="null", name="schedule")
+      input(type="hidden", value="#{datas._id}", name="id")
       input(type="submit", value="更新")
     div#calendar
     //- form(method="post", action="/")    

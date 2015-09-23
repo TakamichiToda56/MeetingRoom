@@ -38,18 +38,36 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
   var schedule = req.body.schedule;
-  MeetingData.remove({});
-  MeetingData.find(function(err,docs){
-    if(err){
-      console.log(err);
-    }
-    docs = new MeetingData({schedule : schedule});
-    docs.save();
-    res.render('index', {
-      title : 'インキュC会議室予約システム',
-      datas : docs
+  MeetingData.remove({}, function(err) {
+    MeetingData.find(function(err,docs){
+      if(err){
+        console.log(err);
+      }
+      console.log(docs);
+      docs = new MeetingData({schedule : schedule});
+      docs.save();
+      console.log(docs);
+      res.render('index', {
+        title : 'インキュC会議室予約システム',
+        datas : docs
+      });
     });
   });
+
+  // MeetingData.find(function(err,docs){
+  //   if(err){
+  //     console.log(err);
+  //   }
+  //   console.log(docs);
+  //   //docs = new MeetingData({schedule : schedule});
+  //   docs.update(new MeetingData({schedule : schedule}));
+  //   docs.save();
+  //   console.log(docs);
+  //   res.render('index', {
+  //     title : 'インキュC会議室予約システム',
+  //     datas : docs
+  //   });
+  // });
 });
 
 module.exports = router;
