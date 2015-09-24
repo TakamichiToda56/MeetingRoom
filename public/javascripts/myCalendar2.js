@@ -2,7 +2,7 @@ var allSchedulePlan = new Array;
 
 //$('#calendar').fullCalendar('renderEvent', JSON.parse(document.getElementById('schedulePlan').value), true);
 $(document).ready(function() {
-	shapeDBData(document.getElementById('id').value)
+	shapeDBData(document.getElementById('schedulePlan').value);
 	$('#calendar').fullCalendar({
 		header: {
 			left: 'prev,next today',
@@ -25,8 +25,9 @@ $(document).ready(function() {
 					jsonData = JSON.parse(jsonText);
 					$('#calendar').fullCalendar('renderEvent', jsonData, true);
 					$('#calendar').fullCalendar('unselect');
-					console.log(document.getElementById('schedulePlan').value);
+					console.log(allSchedulePlan);
 					allSchedulePlan.push(jsonText);
+					console.log(allSchedulePlan);
 					document.getElementById('schedulePlan').value = allSchedulePlan;
 				}else{
 					alert("予約は時間で入力して下さい。");
@@ -81,5 +82,9 @@ shapeJSONText = function(title,start,end){
 }
 
 shapeDBData = function(txt) {
+	var text = JSON.stringify(txt)
+	var jsonData = JSON.parse(text);
 	console.log(txt);
+	console.log(text);
+	console.log(typeof jsonData);
 }

@@ -18,21 +18,18 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
   var schedule = req.body.schedule;
+  //console.log(schedule);
   //MeetingData.remove({}, function(err) {
     MeetingData.find(function(err,docs){
       if(err){
         console.log(err);
       }
+      MeetingData.remove({}, function(err) {});
       newDoc = new MeetingData({schedule : schedule});
+      console.log(newDoc.schedule);
       newDoc.save();
-      // res.render('index', {
-      //   title : 'インキュC会議室予約システム',
-      //   datas : docs
-      // });
       res.redirect("/")
     });
-
-
   //});
 
   // MeetingData.find(function(err,docs){

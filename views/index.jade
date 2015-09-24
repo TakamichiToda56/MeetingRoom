@@ -2,7 +2,7 @@ extends layout
 
 block content
   div#contents
-    div= datas
+    div #{datas}
     input(type="text", id="newReserve")
     form(method="post", action="/")
       input#schedulePlan(type="hidden", value="#{datas}", name="schedule")
