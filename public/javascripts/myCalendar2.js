@@ -1,7 +1,8 @@
 var allSchedulePlan = new Array;
 
+//$('#calendar').fullCalendar('renderEvent', JSON.parse(document.getElementById('schedulePlan').value), true);
 $(document).ready(function() {
-
+	shapeDBData(document.getElementById('id').value)
 	$('#calendar').fullCalendar({
 		header: {
 			left: 'prev,next today',
@@ -14,17 +15,17 @@ $(document).ready(function() {
 		selectHelper: true,
 
 		select: function(start, end, jsEvent, view) {
-
+			//allSchedulePlan.push(document.getElementById('schedulePlan').value);
 			title = document.getElementById('newReserve').value;
 			// 予約社名を入力しているのか確認
 			if(title!=""){
 				// 予約を時間で入力しているかの判別
 				if(!start._isUTC){
-					console.log(title);
 					jsonText = shapeJSONText(title, start, end);
 					jsonData = JSON.parse(jsonText);
 					$('#calendar').fullCalendar('renderEvent', jsonData, true);
 					$('#calendar').fullCalendar('unselect');
+					console.log(document.getElementById('schedulePlan').value);
 					allSchedulePlan.push(jsonText);
 					document.getElementById('schedulePlan').value = allSchedulePlan;
 				}else{
@@ -77,4 +78,8 @@ shapeJSONText = function(title,start,end){
 		'end':end
 	};
 	return JSON.stringify(jsonData);
+}
+
+shapeDBData = function(txt) {
+	console.log(txt);
 }
