@@ -9,9 +9,14 @@ router.get('/', function(req, res, next) {
       if(err){
         console.log(err);
       }
+      if(docs.length==1){
+        var ret = docs[0].schedule;
+      }else{
+        var ret = docs;
+      }
       res.render('index', {
         title : 'インキュC会議室予約システム',
-        datas : docs
+        datas : ret
       });
     });
 });
@@ -26,7 +31,7 @@ router.post('/', function(req, res, next) {
       }
       MeetingData.remove({}, function(err) {});
       newDoc = new MeetingData({schedule : schedule});
-      console.log(newDoc.schedule);
+      //console.log(newDoc.schedule);
       newDoc.save();
       res.redirect("/")
     });
