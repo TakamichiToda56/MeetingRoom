@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var  Schema = mongoose.Schema;
 
-var url = 'mongodb://localhost/mydb';
+var url = 'mongodb://localhost/db';
 
 var db  = mongoose.createConnection(url, function(err, res){
     if(err){
@@ -20,9 +20,6 @@ var db  = mongoose.createConnection(url, function(err, res){
 // })
 
 var MeetingDataSchema = new mongoose.Schema({
-  // 'title' : String,
-  // 'start' : String,
-  // 'end' : String
   'schedule' : String
 })
 

@@ -1,8 +1,13 @@
-var allSchedulePlan = new Array;
+var allSchedulePlan = [];
 
-//$('#calendar').fullCalendar('renderEvent', JSON.parse(document.getElementById('schedulePlan').value), true);
 $(document).ready(function() {
-	shapeDBData(document.getElementById('schedulePlan').value);
+	var allSchedulePlan = document.getElementById('schedulePlan').value.split(",");
+	allSchedulePlan = deleteCoron(allSchedulePlan)
+	if(document.getElementById('schedulePlan').value.length==0){
+		var osdJsonList = {'title':"",'start':1,'end':1	};
+	}else{
+		var osdJsonList = shapeOldSchedule(document.getElementById('schedulePlan').value);
+	}
 	$('#calendar').fullCalendar({
 		header: {
 			left: 'prev,next today',
@@ -10,9 +15,12 @@ $(document).ready(function() {
 			right: 'month,agendaWeek,agendaDay'
 		},
     timezone: 'local',
-		//defaultDate: $('#calendar'.fullCalendar( 'today'),
 		selectable: true,
 		selectHelper: true,
+
+		eventSources: [{
+                events: osdJsonList
+							}],
 
 		select: function(start, end, jsEvent, view) {
 			//allSchedulePlan.push(document.getElementById('schedulePlan').value);
@@ -25,9 +33,7 @@ $(document).ready(function() {
 					jsonData = JSON.parse(jsonText);
 					$('#calendar').fullCalendar('renderEvent', jsonData, true);
 					$('#calendar').fullCalendar('unselect');
-					console.log(allSchedulePlan);
 					allSchedulePlan.push(jsonText);
-					console.log(allSchedulePlan);
 					document.getElementById('schedulePlan').value = allSchedulePlan;
 				}else{
 					alert("予約は時間で入力して下さい。");
@@ -40,13 +46,12 @@ $(document).ready(function() {
     eventClick: function(event, jsEvent, view) {
       var isDeletePlan = confirm("この予定を削除しますか？");
       if(isDeletePlan){
-        var deleteDay = shapingScheduleData(
-          event.start,event.end,view);
+				var deleteDay = shapeJSONText(event.title,event.start,event.end)
         var deleteNum = new Array;
         $('#calendar').fullCalendar("removeEvents", event._id);
         for(var i = 0; i < allSchedulePlan.length;i++){
           if(allSchedulePlan[i].indexOf(deleteDay[0].toString())!=-1){
-            allSchedulePlan.splice(i,1);
+            allSchedulePlan.splice(i,3);
             break;
           }
         }
@@ -54,11 +59,11 @@ $(document).ready(function() {
       }
     },
     eventResizeStop: function(event, jsEvent, ui, view){
-      var newDay = shapingScheduleData(event.start,event.end,view);
+      // var newDay = shapingScheduleData(event.start,event.end,view);
+      // allSchedulePlan[event._id.split("_fc")[1]-1] = newDay;
+			var newDay = shapingScheduleData(event.start,event.end,view);
       allSchedulePlan[event._id.split("_fc")[1]-1] = newDay;
-      //console.log(1);
       document.getElementById('schedulePlan').value = allSchedulePlan;
-      //console.log(2);
     },
     eventDragStop: function( event, jsEvent, ui, view ) {
       var newDay = shapingScheduleData(event.start,event.end,view);
@@ -81,10 +86,33 @@ shapeJSONText = function(title,start,end){
 	return JSON.stringify(jsonData);
 }
 
-shapeDBData = function(txt) {
-	var text = JSON.stringify(txt)
-	var jsonData = JSON.parse(text);
-	console.log(txt);
-	console.log(text);
-	console.log(typeof jsonData);
+shapeOldSchedule = function(elm){
+	if(elm[0]==","){
+		elm = elm.substr(1);
+	}
+	elmList = elm.split("},{");
+	res = []
+	for(i = 0; i < elmList.length; i++){
+		if(elmList[i][0]!="{"){
+			elmList[i] = "{" + elmList[i];
+		}
+		if(elmList[i][(elmList[i].length-1)]!="}"){
+			elmList[i] = elmList[i] + "}";
+		}
+		var shapeData = JSON.parse(elmList[i]);
+		res.push(shapeData);
+	}
+	return res;
+}
+
+deleteCoron = function(allay){
+	if(allay[0]==""){
+		res = [];
+		for(var i = 1; i < allay.length; i++){
+			res.push(allay[i]);
+		}
+		return res
+	}else{
+		return allay
+	}
 }
