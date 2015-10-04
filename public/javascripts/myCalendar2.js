@@ -23,8 +23,6 @@ $(document).ready(function() {
 							}],
 
 		select: function(start, end, jsEvent, view) {
-			//allSchedulePlan.push(document.getElementById('schedulePlan').value);
-			//title = document.getElementById('newReserve').value;
 			// 予約を時間で入力しているかの判別
 			if(!start._isUTC){
 				title = prompt("予約者名を入力して下さい", "");
