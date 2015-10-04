@@ -2,10 +2,8 @@ extends layout
 
 block content
   div#contents
-    //div #{datas}
-    input(type="text", id="newReserve")
     form(method="post", action="/")
       input#schedulePlan(type="hidden", value="#{datas}", name="schedule")
       input#id(type="hidden", value="#{datas}", name="id")
-      input(type="submit", value="更新")
+      input(type="submit", id="reloadButton", value="更新")
     div#calendar

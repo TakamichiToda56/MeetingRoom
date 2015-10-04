@@ -24,22 +24,23 @@ $(document).ready(function() {
 
 		select: function(start, end, jsEvent, view) {
 			//allSchedulePlan.push(document.getElementById('schedulePlan').value);
-			title = document.getElementById('newReserve').value;
-			// 予約社名を入力しているのか確認
-			if(title!=""){
-				// 予約を時間で入力しているかの判別
-				if(!start._isUTC){
+			//title = document.getElementById('newReserve').value;
+			// 予約を時間で入力しているかの判別
+			if(!start._isUTC){
+				title = prompt("予約者名を入力して下さい", "");
+				// 予約社名を入力しているのか確認
+				if(title!=""){
 					jsonText = shapeJSONText(title, start, end);
 					jsonData = JSON.parse(jsonText);
 					$('#calendar').fullCalendar('renderEvent', jsonData, true);
 					$('#calendar').fullCalendar('unselect');
 					allSchedulePlan.push(jsonText);
 					document.getElementById('schedulePlan').value = allSchedulePlan;
-				}else{
-					alert("予約は時間で入力して下さい。");
-				}
+					}else{
+						alert("予約者名を入力して下さい。");
+					}
 			}else{
-				alert("予約者名を入力して下さい。");
+				alert("weekかdayをクリックして時間で入力して下さい。");
 			}
 		},
 
