@@ -21,11 +21,11 @@ $(document).ready(function() {
 		eventSources: [{
                 events: osdJsonList
 							}],
-
 		select: function(start, end, jsEvent, view) {
 			// 予約を時間で入力しているかの判別
 			if(!start._isUTC){
 				title = prompt("予約者名を入力して下さい", "");
+				document.getElementById('newReserve').value = title;
 				// 予約社名を入力しているのか確認
 				if(title!=""){
 					jsonText = shapeJSONText(title, start, end);
@@ -48,11 +48,16 @@ $(document).ready(function() {
 				var deleteDay = shapeJSONText(event.title,event.start,event.end)
         var deleteNum = new Array;
         $('#calendar').fullCalendar("removeEvents", event._id);
-        for(var i = 0; i < allSchedulePlan.length;i++){
-          if(allSchedulePlan[i].indexOf(deleteDay[0].toString())!=-1){
-            allSchedulePlan.splice(i,3);
-            break;
-          }
+        for(var i = 0; i < (allSchedulePlan.length-2);i += 3){
+					var bindSchedule = allSchedulePlan[i] + "," + allSchedulePlan[i+1] + "," + allSchedulePlan[i+2]
+						if(bindSchedule==deleteDay){
+							allSchedulePlan.splice(i,3);
+						}
+
+          //if(allSchedulePlan[i].indexOf(deleteDay[0].toString())!=-1){
+            //allSchedulePlan.splice(i,3);
+            //break;
+          //}
         }
         document.getElementById('schedulePlan').value = allSchedulePlan;
       }

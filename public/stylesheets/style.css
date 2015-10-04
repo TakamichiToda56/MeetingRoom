@@ -56,11 +56,12 @@ body {
 
 form {
   text-align: center;
+    height: 40px;
 }
 
 #reloadButton {
   width: 400px;
-  height: 30px;
+  height: 40px;
   font-size: 20px;
   text-align: center;
 }
