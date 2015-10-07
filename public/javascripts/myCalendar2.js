@@ -14,6 +14,7 @@ $(document).ready(function() {
 			center: 'title',
 			right: 'month,agendaWeek,agendaDay'
 		},
+		defaultView: 'agendaWeek',
     timezone: 'local',
 		selectable: true,
 		selectHelper: true,
