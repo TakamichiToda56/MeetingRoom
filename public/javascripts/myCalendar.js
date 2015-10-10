@@ -73,6 +73,7 @@ $(document).ready(function() {
 						}
         }
         document.getElementById('schedulePlan').value = allSchedulePlan;
+				jsSubmit('sendScedule','/','POST');
       }
     },
     eventResizeStop: function(event, jsEvent, ui, view){
