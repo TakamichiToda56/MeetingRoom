@@ -51,6 +51,7 @@ $(document).ready(function() {
 					$('#calendar').fullCalendar('unselect');
 					allSchedulePlan.push(jsonText);
 					document.getElementById('schedulePlan').value = allSchedulePlan;
+					jsSubmit('sendScedule','/','POST');
 					}else{
 						alert("予約者名を入力して下さい。");
 					}
@@ -70,11 +71,6 @@ $(document).ready(function() {
 						if(bindSchedule==deleteDay){
 							allSchedulePlan.splice(i,3);
 						}
-
-          //if(allSchedulePlan[i].indexOf(deleteDay[0].toString())!=-1){
-            //allSchedulePlan.splice(i,3);
-            //break;
-          //}
         }
         document.getElementById('schedulePlan').value = allSchedulePlan;
       }
@@ -136,4 +132,13 @@ deleteCoron = function(allay){
 	}else{
 		return allay
 	}
+}
+
+jsSubmit = function(formName, url, method){
+    // サブミットするフォームを取得
+    var f = document.forms[formName];
+    f.method = method; // method(GET or POST)を設定する
+    f.action = url;    // action(遷移先URL)を設定する
+    f.submit();        // submit する
+    return true;
 }
